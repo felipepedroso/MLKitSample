@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/sixteenDp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/sixteenDp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineBottomImageSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineBottomImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verticalGuidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/sixteenDp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verticalGuidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/sixteenDp" />
+
+    <ImageButton
+        android:id="@+id/buttonGetImageFromCamera"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_camera"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineBottomImageSource"
+        app:layout_constraintLeft_toRightOf="@id/verticalGuidelineLeft"
+        app:layout_constraintRight_toLeftOf="@id/buttonGetImageFromFile"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop" />
+
+    <ImageButton
+        android:id="@+id/buttonGetImageFromFile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_gallery"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineBottomImageSource"
+        app:layout_constraintLeft_toRightOf="@id/buttonGetImageFromCamera"
+        app:layout_constraintRight_toLeftOf="@id/verticalGuidelineRight"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop"
+        android:elevation="@dimen/twoDp"/>
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/imageViewPicture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/eightDp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineBottomImageView"
+        app:layout_constraintLeft_toRightOf="@id/verticalGuidelineLeft"
+        app:layout_constraintRight_toLeftOf="@id/verticalGuidelineRight"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineBottomImageSource" />
+
+
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/sixtyFourDp"
+        android:layout_margin="@dimen/eightDp"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toRightOf="@id/verticalGuidelineLeft"
+        app:layout_constraintRight_toLeftOf="@id/verticalGuidelineRight"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineBottomImageView"/>
+
+    <Button
+        android:id="@+id/buttonDetectFace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/detect_faces"
+        android:layout_marginTop="@dimen/sixteenDp"
+        app:layout_constraintBottom_toTopOf="@id/buttonLabelImageRemote"
+        app:layout_constraintLeft_toRightOf="@id/verticalGuidelineLeft"
+        app:layout_constraintRight_toLeftOf="@id/buttonDetectText"
+        app:layout_constraintTop_toBottomOf="@id/textViewResult" />
+
+    <Button
+        android:id="@+id/buttonDetectText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/detect_text"
+        android:layout_marginTop="@dimen/sixteenDp"
+        app:layout_constraintBottom_toTopOf="@id/buttonLabelImageLocal"
+        app:layout_constraintLeft_toRightOf="@id/buttonDetectFace"
+        app:layout_constraintRight_toLeftOf="@id/verticalGuidelineRight"
+        app:layout_constraintTop_toBottomOf="@id/textViewResult" />
+
+    <Button
+        android:id="@+id/buttonLabelImageRemote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/label_remote"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineBottom"
+        app:layout_constraintLeft_toRightOf="@id/verticalGuidelineLeft"
+        app:layout_constraintRight_toLeftOf="@id/buttonLabelImageLocal"
+        app:layout_constraintTop_toBottomOf="@id/buttonDetectFace" />
+
+    <Button
+        android:id="@+id/buttonLabelImageLocal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/label_local"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineBottom"
+        app:layout_constraintLeft_toRightOf="@id/buttonLabelImageRemote"
+        app:layout_constraintRight_toLeftOf="@id/verticalGuidelineRight"
+        app:layout_constraintTop_toBottomOf="@id/buttonDetectText" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewPicture"
+        app:layout_constraintLeft_toLeftOf="@id/imageViewPicture"
+        app:layout_constraintRight_toRightOf="@id/imageViewPicture"
+        app:layout_constraintTop_toTopOf="@id/imageViewPicture"
+        android:visibility="invisible"/>
+
+
+</android.support.constraint.ConstraintLayout>
