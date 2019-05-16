@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MLKit Sample</string>
     <string name="detect_faces">Detect Faces</string>
-    <string name="detect_text">Detect Text</string>
+    <string name="detect_text">Detect Text Local</string>
     <string name="label_local">Label Local</string>
     <string name="label_remote">Label Remote</string>
     <string name="generic_error">Failed to process image.</string>
