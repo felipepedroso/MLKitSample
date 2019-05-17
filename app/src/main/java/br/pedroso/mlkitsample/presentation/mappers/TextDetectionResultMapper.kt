@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.RectF
 import br.pedroso.mlkitsample.presentation.ImageProcessingResult
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 
@@ -18,7 +19,10 @@ class TextDetectionResultMapper {
         }
 
         private fun createResultText(detectedText: FirebaseVisionText): String {
-            val blocksAmount = detectedText.blocks.flatMap { it.lines }.flatMap { it.elements }.size
+            val blocksAmount = detectedText.textBlocks
+                    .flatMap { it.lines }
+                    .flatMap { it.elements }
+                    .size
 
             return "Elements detected: $blocksAmount"
         }
@@ -29,11 +33,13 @@ class TextDetectionResultMapper {
             val canvas = Canvas(annotatedBitmap)
             canvas.drawBitmap(originalImage, 0f, 0f, null)
 
-            detectedText.blocks.forEach {
+            detectedText.textBlocks.forEach {
                 canvas.drawRect(it.boundingBox, textBoundingBoxPaint)
 
                 it.lines.flatMap { it.elements }.forEach {
-                    canvas.drawRect(it.boundingBox, textBoundingBoxPaint)
+                    val rect = RectF(it.boundingBox)
+                    canvas.drawRect(rect, textBoundingBoxPaint)
+                    canvas.drawText(it.text, rect.left, rect.bottom, textPaint)
                 }
             }
 
@@ -45,6 +51,12 @@ class TextDetectionResultMapper {
                     strokeWidth = 5f
                     color = Color.MAGENTA
                     style = Paint.Style.STROKE
+                }
+
+        private val textPaint =
+                Paint().apply {
+                    color = Color.MAGENTA
+                    textSize = 50.0f
                 }
     }
 }

@@ -2,13 +2,11 @@ package br.pedroso.mlkitsample.mlkit
 
 import android.graphics.Bitmap
 import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
-import com.google.firebase.ml.vision.cloud.label.FirebaseVisionCloudLabel
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
-import com.google.firebase.ml.vision.label.FirebaseVisionLabel
-import com.google.firebase.ml.vision.label.FirebaseVisionLabelDetectorOptions
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel
+import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceImageLabelerOptions
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 import io.reactivex.Observable
 
@@ -19,11 +17,11 @@ class RxMLKit {
             val firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap)
 
             val options = FirebaseVisionFaceDetectorOptions.Builder()
-                    .setModeType(FirebaseVisionFaceDetectorOptions.ACCURATE_MODE)
-                    .setLandmarkType(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
-                    .setClassificationType(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+                    .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
+                    .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+                    .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
                     .setMinFaceSize(0.15f)
-                    .setTrackingEnabled(true)
+                    .enableTracking()
                     .build()
 
             val detector = FirebaseVision.getInstance()
@@ -44,9 +42,9 @@ class RxMLKit {
 
             val firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap)
 
-            val detector = FirebaseVision.getInstance().visionTextDetector
+            val detector = FirebaseVision.getInstance().onDeviceTextRecognizer
 
-            detector.detectInImage(firebaseVisionImage)
+            detector.processImage(firebaseVisionImage)
                     .addOnSuccessListener {
                         observableEmitter.onNext(it)
                         observableEmitter.onComplete()
@@ -56,19 +54,19 @@ class RxMLKit {
                     }
         }
 
-        fun labelImageLocal(bitmap: Bitmap) = Observable.create<List<FirebaseVisionLabel>> {
+        fun labelImageLocal(bitmap: Bitmap) = Observable.create<List<FirebaseVisionImageLabel>> {
             val observableEmitter = it
 
             val firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap)
 
-            val options = FirebaseVisionLabelDetectorOptions.Builder()
+            val options = FirebaseVisionOnDeviceImageLabelerOptions.Builder()
                     .setConfidenceThreshold(0.8f)
                     .build()
 
             val detector = FirebaseVision.getInstance()
-                    .getVisionLabelDetector(options)
+                    .getOnDeviceImageLabeler(options)
 
-            detector.detectInImage(firebaseVisionImage)
+            detector.processImage(firebaseVisionImage)
                     .addOnSuccessListener {
                         observableEmitter.onNext(it)
                         observableEmitter.onComplete()
@@ -78,20 +76,13 @@ class RxMLKit {
                     }
         }
 
-        fun labelImageRemote(bitmap: Bitmap) = Observable.create<List<FirebaseVisionCloudLabel>> {
+        fun labelImageRemote(bitmap: Bitmap) = Observable.create<List<FirebaseVisionImageLabel>> {
             val observableEmitter = it
 
             val firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap)
+            val detector = FirebaseVision.getInstance().cloudImageLabeler
 
-            val options = FirebaseVisionCloudDetectorOptions.Builder()
-                    .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
-                    .setMaxResults(15)
-                    .build()
-
-            val detector = FirebaseVision.getInstance()
-                    .getVisionCloudLabelDetector(options)
-
-            detector.detectInImage(firebaseVisionImage)
+            detector.processImage(firebaseVisionImage)
                     .addOnSuccessListener {
                         observableEmitter.onNext(it)
                         observableEmitter.onComplete()

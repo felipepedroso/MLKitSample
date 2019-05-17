@@ -21,7 +21,7 @@
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
-            android:value="label,face,text" />
+            android:value="label,face,text,ocr" />
 
         <activity
             android:name=".presentation.MainActivity"

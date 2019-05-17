@@ -70,15 +70,15 @@ class FaceDetectionResultMapper {
                 }
 
         private val landmarksToDraw = arrayListOf(
-                FirebaseVisionFaceLandmark.BOTTOM_MOUTH,
+                FirebaseVisionFaceLandmark.MOUTH_BOTTOM,
                 FirebaseVisionFaceLandmark.LEFT_CHEEK,
                 FirebaseVisionFaceLandmark.LEFT_EAR,
                 FirebaseVisionFaceLandmark.LEFT_EYE,
-                FirebaseVisionFaceLandmark.LEFT_MOUTH,
+                FirebaseVisionFaceLandmark.MOUTH_LEFT,
                 FirebaseVisionFaceLandmark.NOSE_BASE,
                 FirebaseVisionFaceLandmark.RIGHT_CHEEK,
                 FirebaseVisionFaceLandmark.RIGHT_EAR,
                 FirebaseVisionFaceLandmark.RIGHT_EYE,
-                FirebaseVisionFaceLandmark.RIGHT_MOUTH)
+                FirebaseVisionFaceLandmark.MOUTH_RIGHT)
     }
 }
